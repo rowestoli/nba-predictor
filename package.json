@@ -1,0 +1,20 @@
+{
+  "name": "nba-predictor",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Next-game NBA stat projections with over/under odds, from a gradient-boosted model backtested on unseen games.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "train": "python3 pipeline/train.py"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.7",
+    "vitest": "^5.1.0"
+  }
+}

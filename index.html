@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NBA stat predictor — next-game projections and over/under odds</title>
+    <meta name="description" content="Pick an NBA player and opponent to see projected points, rebounds, assists and threes, with over/under odds from a backtested model. Built by Rowe Stodolnic." />
+    <meta name="theme-color" content="#121614" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="top wrap">
+      <a class="back" href="https://rowestoli.netlify.app/work/nba-predictor">Rowe Stodolnic</a>
+      <a href="https://github.com/rowestoli/nba-predictor">Source on GitHub</a>
+    </header>
+
+    <main class="wrap">
+      <section class="intro">
+        <h1>NBA stat predictor</h1>
+        <p class="lede">
+          Pick a player and a matchup to see their projected stat line for the next game, then set any line to get
+          over/under odds. Projections come from a gradient-boosted model tested on games it never saw.
+        </p>
+        <p class="snapshot" id="snapshot"></p>
+      </section>
+
+      <section class="picker">
+        <div class="combo">
+          <label class="label" for="player-input">Player</label>
+          <input id="player-input" type="search" placeholder="Search 350+ players" autocomplete="off" />
+          <ul class="combo__list" id="player-list" role="listbox" hidden></ul>
+        </div>
+        <div class="field">
+          <label class="label" for="opp">Opponent</label>
+          <select id="opp"></select>
+        </div>
+        <div class="field">
+          <span class="label">Venue</span>
+          <div class="seg" id="venue">
+            <button type="button" data-home="1" aria-pressed="true">Home</button>
+            <button type="button" data-home="0" aria-pressed="false">Away</button>
+          </div>
+        </div>
+      </section>
+      <div class="chips" id="popular" aria-label="Popular players"></div>
+
+      <section class="player" id="player" aria-live="polite">
+        <div class="player__head">
+          <div>
+            <h2 id="p-name"></h2>
+            <p class="muted" id="p-meta"></p>
+          </div>
+          <p class="matchup" id="matchup"></p>
+        </div>
+        <div class="cards" id="cards"></div>
+        <div class="recent">
+          <div class="recent__head">
+            <h3>Last 15 games</h3>
+            <div class="seg seg--sm" id="chart-stat"></div>
+          </div>
+          <svg id="chart" class="chart" role="img"></svg>
+        </div>
+      </section>
+
+      <section class="how">
+        <h2>How accurate is it?</h2>
+        <p class="lede">
+          Trained on 2015–2023, calibrated on 2023–24, and scored on <span id="test-games"></span> games from 2024–25
+          the model never saw. Each prediction uses only what was known before tip-off.
+        </p>
+        <div class="metrics" id="metrics"></div>
+        <div class="how__grid">
+          <figure class="panel">
+            <figcaption>
+              <h3>Are the over/under odds honest?</h3>
+              <p class="muted small">When the model says 60%, the over should hit about 60% of the time. Dots on the line mean well calibrated.</p>
+            </figcaption>
+            <div class="seg seg--sm" id="cal-stat"></div>
+            <svg id="calibration" class="calibration" role="img"></svg>
+          </figure>
+          <figure class="panel">
+            <figcaption>
+              <h3>What drives the points model</h3>
+              <p class="muted small">How much worse predictions get when each input is scrambled (points of error added).</p>
+            </figcaption>
+            <div id="importance" class="importance"></div>
+          </figure>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
